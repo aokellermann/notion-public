@@ -1,8 +1,9 @@
 import json
+import os
 
 
 def dfs(item_id, item, tree, items, private):
-    cur = {'name': item['name'], 'public': item_id not in private, 'children': []}
+    cur = {'name': item['name'], 'public': item['public_url'] is not None and item_id not in private, 'children': []}
     tree.append(cur)
     if 'children' not in item:
         return
@@ -16,8 +17,12 @@ def main():
         dump = json.load(f)
     with open('all.json', 'r') as f:
         items = json.load(f)
-    with open('private.json', 'r') as f:
-        private = set(json.load(f))
+
+    if os.path.exists('private.json'):
+        with open('private.json', 'r') as f:
+            private = set(json.load(f))
+    else:
+        private = set()
 
     tree = []
     for item_id, item in dump.items():

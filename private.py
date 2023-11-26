@@ -12,7 +12,10 @@ def main():
 
     session = requests.Session()
     for i, item in items.items():
-        url = item['url']
+        if 'public_url' not in item:
+            continue
+
+        url = item['public_url']
         print("Querying {}".format(url))
         while True:
             res = session.head(url)

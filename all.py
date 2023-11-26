@@ -47,7 +47,8 @@ def main():
     items = {item['id']: {'name': get_title(item),
                           'parent': item['parent'],
                           'object': item['object'],
-                          'url': item['public_url']} for item in all_results}
+                          'url': item['url'],
+                          'public_url': item.get('public_url')} for item in all_results}
 
     # replace block parents with page/database
     for item in items.values():
